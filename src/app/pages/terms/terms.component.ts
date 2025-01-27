@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-terms',
@@ -6,6 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './terms.component.html',
   styleUrl: './terms.component.scss'
 })
-export class TermsComponent {
+export class TermsComponent implements OnInit {
+  constructor(private titleService: Title) {}
 
+  ngOnInit(): void {
+    this.titleService.setTitle('Kullanım Koşulları - Motoilanlari');
+  }
 }
