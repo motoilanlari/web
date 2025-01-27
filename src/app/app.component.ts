@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { filter } from 'rxjs';
+
 import {FooterComponent} from "./shared/footer/footer.component";
 import {HeaderComponent} from "./shared/header/header.component";
 
@@ -10,5 +13,22 @@ import {HeaderComponent} from "./shared/header/header.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'Motoilanlari';
+  constructor(private router: Router, private titleService: Title) {
+    // Router event'lerini dinleyerek başlıkları güncelliyoruz
+    this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          const currentRoute = this.router.routerState.root;
+          this.setTitleFromRoute(currentRoute);
+        });
+  }
+
+  private setTitleFromRoute(route: any) {
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    if (route.snapshot.data && route.snapshot.data['title']) {
+      this.titleService.setTitle(route.snapshot.data['title']);
+    }
+  }
 }
