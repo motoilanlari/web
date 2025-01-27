@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
     images: {
-        domains: [],
+        domains: ['motoilanlari.com.tr', 'motoilanlari.com', 'web--motoilanlari-f83d3.us-central1.hosted.app'],
     },
 };
 export default nextConfig;
